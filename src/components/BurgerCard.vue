@@ -31,10 +31,19 @@ export default {
     border-radius: 27px;
     cursor: pointer;
   }
+  .burger-card:hover{
+    transform: translateY(.2rem);
+    transition: transform .10s ease
+  }
 
   img {
     height: 10rem;
     margin-top: .4rem;
+  }
+  img:hover{
+    transform: translateY(-.7rem);
+    transform: scale(1.9, 1.9);
+    transition: transform .7s ease;
   }
   .contenty {
     margin: 0rem 1rem 1.4rem;

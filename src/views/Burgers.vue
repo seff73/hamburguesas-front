@@ -4,6 +4,7 @@
     <BackgComponent />
     <div>
       <h1 class="title-burger-view">MENU </h1>
+      <button type="button" v-on:click="$event=> createBurger()">Agregar + </button>
     </div>
     <div class="box-container">
       <BurgerCard />
@@ -22,7 +23,12 @@ import BurgerCard from '../components/BurgerCard.vue';
 
 export default {
     name: "Burgers",
-    components: { BackgComponent, BurgerCard }
+    components: { BackgComponent, BurgerCard },
+    methods: {
+      createBurger() {
+            this.$router.push('/hamburguesas/crear')
+        }
+    }
 }
 </script>
 
