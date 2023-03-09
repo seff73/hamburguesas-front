@@ -2,9 +2,9 @@
   <div class="burgers-view">
     
     <BackgComponent />
-    <div>
+    <div class="flex-end">
       <h1 class="title-burger-view">MENU </h1>
-      <button type="button" v-on:click="$event=> createBurger()">Agregar + </button>
+      <button type="button" class="btn btn-primary" v-on:click="createBurger"> Agregar </button>
     </div>
     <div class="box-container">
       <BurgerCard />

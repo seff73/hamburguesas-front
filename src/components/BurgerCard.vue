@@ -2,8 +2,8 @@
   <div class="burger-card">
     <img src='../assets/product-1.png' alt="product_1"/>
     <div class="contenty">
-      <h3 class="">CHESSE BURGER</h3>
-      <h4>Ingredientes:</h4>
+      <h4 class="fs-5">CHESSE BURGER</h4>
+      <h5 class="fs-6">Ingredientes:</h5>
       <p>queso, tomate, lechuga, jamón</p>
     </div>
   </div>
@@ -42,7 +42,7 @@ export default {
   }
   img:hover{
     transform: translateY(-.7rem);
-    transform: scale(1.9, 1.9);
+    transform: scale(1.4, 1.4);
     transition: transform .7s ease;
   }
   .contenty {
@@ -50,12 +50,12 @@ export default {
     color: #fff;
     
   }
-  h3 {
+  h4 {
     margin-top: 0;
     margin-bottom: .8rem;
     
   }
-  h4 {
+  h5 {
     margin-top: 0rem;
     margin-bottom: 0rem;
     color: #EEE
