@@ -5,39 +5,42 @@
 
         <p>
           <input 
-          type="text" name="name" placeholder="Nombre" 
-          autocomplete="off" class="form-control"
-          v-model="state.newBurger.name"
-        >
-        <span  v-if="v$.newBurger.name.$error">
-          {{ v$.newBurger.name.$errors[0].$message }}
-        </span>
-      </p>
+            type="text" 
+            name="name" 
+            placeholder="Nombre" 
+            autocomplete="off" 
+            class="form-control"
+            v-model="state.newBurger.name"
+          >
+          <span v-if="v$.newBurger.name.$error">
+            {{ v$.newBurger.name.$errors[0].$message }}
+          </span>
+        </p>
       
-      <p>
-        <input class="form-control"
-        type="text" name="ingredients" placeholder="Ingredientes" autocomplete="off"
-        v-model="state.newBurger.ingredients"
-        >
-        <span v-if="v$.newBurger.ingredients.$error">
-          {{ v$.newBurger.ingredients.$errors[0].$message }}
-        </span>
-      </p>
+        <p>
+          <input class="form-control"
+            type="text" name="ingredients" placeholder="Ingredientes" autocomplete="off"
+            v-model="state.newBurger.ingredients"
+          >
+          <span v-if="v$.newBurger.ingredients.$error">
+            {{ v$.newBurger.ingredients.$errors[0].$message }}
+          </span>
+        </p>
       
-      <p>
-        <input  class="form-control"
-        type="number" name="calories" placeholder="Calorías" autocomplete="off"
-        v-model="state.newBurger.calories"
-        >
-        <span v-if="v$.newBurger.calories.$error" >
-          {{ v$.newBurger.calories.$errors[0].$message }}
-        </span>
-      </p>
+        <p>
+          <input  class="form-control"
+            type="number" name="calories" placeholder="Calorías" autocomplete="off"
+            v-model="state.newBurger.calories"
+          >
+          <span v-if="v$.newBurger.calories.$error" >
+            {{ v$.newBurger.calories.$errors[0].$message }}
+          </span>
+        </p>
       
-      <button type="submit" class="btn btn-primary mr-3 px-4">Guardar</button>
-      <button type="cancel" class="btn btn-secondary m-3 " v-on:click="cancelar">Cancelar</button>
+        <button type="submit" class="btn btn-primary mr-3 px-4">Guardar</button>
+        <button type="cancel" class="btn btn-secondary m-3 " v-on:click="cancelar">Cancelar</button>
       
-    </div>
+      </div>
     </form>
   </div>
 </template>
@@ -50,6 +53,7 @@ import { computed, reactive } from 'vue';
 
 export default {
     name: "BurgerForm",
+    props: [ ],
     setup () {
       const state = reactive ({
         newBurger: {
@@ -88,23 +92,23 @@ export default {
       }
     },
     methods: {
-         async hello(e) { 
-          e.preventDefault();
-          alert(this.state.newBurger.name)
-          await this.v$.$validate();
-          if(this.v$.$errors.length) {
-            console.log(this.v$.$errors)
-            alert('validate failed')
-            console.log(this.v$.$errors[0].$message)
-          }else {
-            alert('heyheyhey')
-            console.log(this.v$)
-          }
+      async hello(e) { 
+        e.preventDefault();
+        alert(this.state.newBurger.name)
+        await this.v$.$validate();
+        if(this.v$.$errors.length) {
+          console.log(this.v$.$errors)
+          alert('validate failed')
+          console.log(this.v$.$errors[0].$message)
+        }else {
+          alert('heyheyhey')
+          console.log(this.v$)
+        }
           
-        },
-        cancelar() {
-          this.$router.push('/hamburguesas')
-        },
+      },
+      cancelar() {
+        this.$router.push('/hamburguesas')
+      },
     },
 }
 </script>

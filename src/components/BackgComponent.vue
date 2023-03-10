@@ -1,17 +1,17 @@
 <template>
   <div class="bg-container">
-    <video class="video-bg" src='../assets/backgroundVideo.mp4' autoplay muted loop />
+    <video class="video-bg" src='@/assets/backgroundVideo.mp4' autoplay muted loop />
   </div>
 </template>
 
 <script>
-import BackgroundVideo from '../assets/backgroundVideo.mp4';
 export default {
   name: 'video-bg',
-  props: [ BackgroundVideo ],
+  props: [ ],
   data () {
-
-      return {}
+      return {
+      
+      }
   }
 }
 </script>

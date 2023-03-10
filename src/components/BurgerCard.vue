@@ -1,10 +1,11 @@
 <template>
-  <div class="burger-card">
+  <div class="burger-card" v-on:click="$event => editBurger({ id, name, ingredients, calories })">
     <img src='../assets/product-1.png' alt="product_1"/>
     <div class="contenty">
-      <h4 class="fs-5">CHESSE BURGER</h4>
+      <h4 class="fs-5">{{ name }}</h4>
       <h5 class="fs-6">Ingredientes:</h5>
-      <p>queso, tomate, lechuga, jamón</p>
+      <p>{{ ingredients }}</p>
+      <p>{{ calories }} Calorías</p>
     </div>
   </div>
 </template>
@@ -13,10 +14,16 @@
 
 export default {
   name: 'BurgerCard',
-  props: [  ],
+  props: ['id', 'name', 'ingredients', 'calories' ],
   data () {
-
-      return {}
+      return {
+         
+      }
+  },
+  methods: {
+    editBurger(burger) {
+      this.$router.push(`/hamburguesas/editar/${burger.id}`)  
+    }
   }
 }
 </script>

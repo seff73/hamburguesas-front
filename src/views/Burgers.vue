@@ -5,14 +5,15 @@
     <div class="flex-end">
       <h1 class="title-burger-view">MENU </h1>
       <button type="button" class="btn btn-primary" v-on:click="createBurger"> Agregar </button>
+      <button type="button" class="btn btn-primary" v-on:click="getBurgers"> GETDATA </button>
     </div>
     <div class="box-container">
-      <BurgerCard />
-      <BurgerCard />
-      <BurgerCard />
-      <BurgerCard />
-      <BurgerCard />
-      <BurgerCard />
+      <BurgerCard v-for="burger in this.allBurgers" :key="burger.id" 
+        :id="burger.id"  
+        :name="burger.name" 
+        :ingredients="burger.ingredients"
+        :calories="burger.calories" 
+      />
     </div>
   </div>
 </template>
@@ -24,11 +25,41 @@ import BurgerCard from '../components/BurgerCard.vue';
 export default {
     name: "Burgers",
     components: { BackgComponent, BurgerCard },
+    data() {
+      return {
+        allBurgers: [
+          {
+            id: '9999',
+            name: 'CHESSE BURGER',
+            ingredients: 'queso, tomate, lechuga, jamón ',
+            calories: '322'
+
+          },
+          {
+            id: '22229',
+            name: 'MEAL BURGER',
+            ingredients: 'steak, tomate, lechuga, onion ',
+            calories: '433'
+
+          }
+        ],
+      }
+    }, 
     methods: {
       createBurger() {
             this.$router.push('/hamburguesas/crear')
-        }
-    }
+      },
+       async getBurgers() {
+        await this.$http
+                .get('https://hamburguesas-back.elevadev.cl/burger/')
+                .then(res => { this.allBurgers = res.data}, err => console.error(err))
+        
+                console.log(this.allBurgers)
+      }
+    },
+    created() {
+      console.log(' creado!, llamando a api');
+    },
 }
 </script>
 
