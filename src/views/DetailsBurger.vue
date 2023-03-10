@@ -1,16 +1,15 @@
 <template>
   <div class="details-burger-container">
-    <h1> este es el detalle </h1>
     <BurgerCard 
-      id = "{{ id }} "
-      name= "{{ name }}" 
-      ingredients="{{ ingredients }}"
-      calories="{{ calories }}" 
+      :id = this.$store.state.burgers.current[0].id
+      :nombre= this.$store.state.burgers.current[0].nombre
+      :ingredientes= this.$store.state.burgers.current[0].ingredientes
+      :calorias= this.$store.state.burgers.current[0].calorias
     />
     <div class="buttons-modifier-container flex">
-        <button class="btn btn-primary mt-4 " v-on:click="getSaludo">Editar</button>
-        <button class="btn btn-primary mt-4" v-on:click="backHome">Regresar</button>
-        <button class="btn btn-secondary mt-4" v-on:click="deleteBurger">Eliminar</button>
+        <button class="btn btn-primary mt-4 px-4 m-1 " v-on:click="$event => editBurger(this.$store.state.burgers.current[0])">Editar</button>
+        <button class="btn btn-secondary mt-4 m-1" v-on:click="backHome">Regresar</button>
+        <button class="btn btn-danger mt-4 m-1" v-on:click="deleteBurger">Eliminar</button>
     </div>
 </div>
 </template>
@@ -22,11 +21,22 @@ import BurgerCard from '../components/BurgerCard.vue';
 export default {
   name: "DetailsBurger",
   
-  props: [ "id", "name", "ingredients", "calories" ],
+  props: [],
   
   setup() {
     return {
     
+    };
+  },
+
+  data () {
+    return {
+      currentEdit: {
+        id: "",
+        nombre: "",
+        ingredientes: "",
+        calorias: ""
+      }
     };
   },
   
@@ -34,12 +44,19 @@ export default {
   
   methods: {
     ...mapActions('burgers', ['getBurgers']),
+    
     backHome() {
       this.$router.push('/hamburguesas')
     },
-    editBurger(algo) {
-      console.log(algo)
+
+    ...mapActions('burgers', ['setCurrentBurger']),
+
+    async editBurger(burger) {
+      this.$router.push(`/hamburguesas/editar/${burger.id}`)
+      //this.setCurrentBurger({'commit': 'commit', data: burger})
+      
     },
+
     deleteBurger() {
         console.log(this.$store.state)
     },
@@ -48,6 +65,10 @@ export default {
   computed: {
       ...mapGetters('burgers', ['getSaludo'])
   },
+
+  created () {
+    this.currentEdit = this.$store.state.burgers.current[0]
+  }
 }
 </script>
 
@@ -55,5 +76,7 @@ export default {
 .details-burger-container{
   background: url(../assets/background.jpg);
   height: 100vh;
+  text-align: -webkit-center;
+  padding-top: 3%
 }
 </style>

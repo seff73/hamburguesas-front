@@ -6,34 +6,35 @@
         <p>
           <input 
             type="text" 
-            name="name" 
+            name="nombre" 
             placeholder="Nombre" 
             autocomplete="off" 
             class="form-control"
-            v-model="state.newBurger.name"
+            v-model="state.newBurger.nombre"
+          
           >
-          <span v-if="v$.newBurger.name.$error">
-            {{ v$.newBurger.name.$errors[0].$message }}
+          <span class="error-message" v-if="v$.newBurger.nombre.$error">
+            {{ v$.newBurger.nombre.$errors[0].$message }}
           </span>
         </p>
       
         <p>
           <input class="form-control"
-            type="text" name="ingredients" placeholder="Ingredientes" autocomplete="off"
-            v-model="state.newBurger.ingredients"
+            type="text" name="ingredientes" placeholder="Ingredientes" autocomplete="off"
+            v-model="state.newBurger.ingredientes"
           >
-          <span v-if="v$.newBurger.ingredients.$error">
-            {{ v$.newBurger.ingredients.$errors[0].$message }}
+          <span class="error-message" v-if="v$.newBurger.ingredientes.$error">
+            {{ v$.newBurger.ingredientes.$errors[0].$message }}
           </span>
         </p>
       
         <p>
           <input  class="form-control"
-            type="number" name="calories" placeholder="Calorías" autocomplete="off"
-            v-model="state.newBurger.calories"
+            type="number" name="calorias" placeholder="Calorías" autocomplete="off"
+            v-model="state.newBurger.calorias"
           >
-          <span v-if="v$.newBurger.calories.$error" >
-            {{ v$.newBurger.calories.$errors[0].$message }}
+          <span class="error-message" v-if="v$.newBurger.calorias.$error" >
+            {{ v$.newBurger.calorias.$errors[0].$message }}
           </span>
         </p>
       
@@ -53,13 +54,13 @@ import { computed, reactive } from 'vue';
 
 export default {
     name: "BurgerForm",
-    props: [ ],
+    props: ['current'],
     setup () {
       const state = reactive ({
-        newBurger: {
-                name: "",
-                ingredients: [],
-                calories: ""
+         newBurger: {
+                nombre: "",
+                ingredientes: [],
+                calorias: ""
         }
       })
 
@@ -67,18 +68,18 @@ export default {
         return {
 
           newBurger: {
-            name: {
+            nombre: {
               required, 
               maxLength: maxLength(254),
             },
-            ingredients: {
+            ingredientes: {
               required,
               maxLength: maxLength(254),
             },
-            calories: {
+            calorias: {
               required,
               minValue: minValue(0),
-              maxValue: maxValue(10000)
+              maxValue: maxValue(100000)
             }               
           }
         }
@@ -91,18 +92,17 @@ export default {
         v$
       }
     },
+
     methods: {
       async hello(e) { 
         e.preventDefault();
-        alert(this.state.newBurger.name)
         await this.v$.$validate();
         if(this.v$.$errors.length) {
           console.log(this.v$.$errors)
-          alert('validate failed')
-          console.log(this.v$.$errors[0].$message)
+          console.log('validate failed')
+      
         }else {
           alert('heyheyhey')
-          console.log(this.v$)
         }
           
       },
@@ -110,6 +110,10 @@ export default {
         this.$router.push('/hamburguesas')
       },
     },
+
+    created () {
+      this.state.newBurger = this.$store.state.burgers.current[0]
+    }
 }
 </script>
 
@@ -119,5 +123,8 @@ export default {
   }
   .form-container input{
     border-radius: .3rem;
+  }
+  .error-message{
+    color: #E32;
   }
 </style>

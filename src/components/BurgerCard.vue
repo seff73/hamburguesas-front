@@ -1,29 +1,42 @@
 <template>
-  <div class="burger-card" v-on:click="$event => editBurger({ id, name, ingredients, calories })">
+  <div class="burger-card" v-on:click="$event => detailsBurger({ id, nombre, ingredientes, calorias, })">
     <img src='../assets/product-1.png' alt="product_1"/>
     <div class="contenty">
-      <h4 class="fs-5">{{ name }}</h4>
+      <h4 class="fs-5">{{ nombre }}</h4>
       <h5 class="fs-6">Ingredientes:</h5>
-      <p>{{ ingredients }}</p>
-      <p>{{ calories }} Calorías</p>
+      <p>{{ ingredientes }}</p>
+      <p>{{ calorias }} Calorías</p>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 
 export default {
   name: 'BurgerCard',
-  props: ['id', 'name', 'ingredients', 'calories' ],
+  props: ['id', 'nombre', 'ingredientes', 'calorias', ],
   data () {
       return {
          
       }
   },
   methods: {
-    editBurger(burger) {
-      this.$router.push(`/hamburguesas/editar/${burger.id}`)  
+    ...mapActions('burgers', ['setCurrentBurger']),
+
+    async editBurger(burger) {
+      //await this.$store.burgers.commit('setCurrent', { current: burger } )
+      this.$router.push(`/hamburguesas/${burger.id}`)
+      this.setCurrentBurger({'commit': 'commit', data: burger})
+      console.log(burger, await this.$store.state.burgers.current[0].nombre)  
+    },
+    
+    detailsBurger(burger) {
+      this.$router.push(`/hamburguesas/${burger.id}`)
+      this.setCurrentBurger({'commit': 'commit', data: burger})
     }
+    
   }
 }
 </script>
@@ -40,6 +53,7 @@ export default {
     min-width: 255px;
     max-width: 270px;
     max-height: 342px;
+    
   }
   .burger-card:hover{
     transform: translateY(.2rem);

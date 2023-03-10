@@ -1,8 +1,15 @@
 <template>
   <div class="create-container">
     
-    <BurgerCard class="create-preview-card"/>
-    <BurgerForm />
+    <BurgerCard class="create-preview-card"
+      :key="this.$store.state.burgers.current[0].id" 
+      :id="this.$store.state.burgers.current[0].id"  
+      :nombre="this.editCurrent.nombre.toUpperCase()" 
+      :ingredientes=this.editCurrent.ingredientes
+      :calorias=this.editCurrent.calorias
+      :current="this.$store.state.burgers.current"
+    />
+    <BurgerForm  />
     
   </div>
 </template>
@@ -16,7 +23,23 @@ export default {
   setup() {
     return {};
   },
-  components: { BurgerCard, BurgerForm }
+  components: { BurgerCard, BurgerForm },
+
+  data() {
+    return {
+      editCurrent: {
+        id: "",
+        nombre: "",
+        ingredientes: "",
+        calorias: "",
+
+      }
+    }
+  },
+  
+  created () {
+    this.editCurrent = this.$store.state.burgers.current[0]
+  }
 }
 </script>
 

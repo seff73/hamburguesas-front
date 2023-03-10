@@ -4,16 +4,17 @@
     <BackgComponent />
     <div class="flex-end">
       <h1 class="title-burger-view">MENU </h1>
-      <button type="button" class="btn btn-primary" v-on:click="createBurger"> Agregar </button>
-      <button type="button" class="btn btn-primary" v-on:click="getBurgers2"> GETDATA </button>
+      <button type="button" class="btn btn-primary mx-3" v-on:click="createBurger"> Agregar </button>
+      <button type="button" class="btn btn-success" v-on:click="getBurgers2"> GET DATA </button>
     </div>
     <div class="box-container">
       <BurgerCard v-for="burger in this.$store.state.burgers.allBurgers" 
         :key="burger.id" 
         :id="burger.id"  
-        :name="burger.nombre.toUpperCase()" 
-        :ingredients="burger.ingredientes?.toString().replaceAll(',', ', ')"
-        :calories="burger.calorias" 
+        :nombre="burger.nombre.toUpperCase()" 
+        :ingredientes="burger.ingredientes?.toString().replaceAll(',', ', ')"
+        :calorias="burger.calorias"
+        
       />
     </div>
   </div>
@@ -36,17 +37,29 @@ export default {
 
     methods: {
       ...mapActions('burgers', ['getBurgers2']),
+      
+      ...mapActions('burgers', ['setCurrentBurger']),
+      
       createBurger() {
-            this.$router.push('/hamburguesas/crear')
+        const burger = {
+          id: '',
+          nombre: '',
+          ingredientes: "",
+          calorias: '',
+        }
+
+        this.setCurrentBurger({'commit': 'commit', data: burger})
+        this.$router.push('/hamburguesas/crear')
+  
       },
-      async getBurgers() {
-        await this.$http
-                .get('https://hamburguesas-back.elevadev.cl/burger/')
-                .then(res => { this.allBurgers = res.data}, err => console.error(err))
-        
-                console.log(this.allBurgers)
-                console.log()
-      },
+      //async getBurgers() {
+      //  await this.$http
+      //          .get('https://hamburguesas-back.elevadev.cl/burger/')
+      //          .then(res => { this.allBurgers = res.data}, err => console.error(err))
+      //  
+      //          console.log(this.allBurgers)
+      //          console.log()
+      //},
       
 
     },

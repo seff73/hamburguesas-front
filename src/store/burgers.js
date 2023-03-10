@@ -21,7 +21,16 @@ export default {
           ingredientes: [ 'steak', 'tomate', 'lechuga', 'onion' ],
           calorias: 433
       },
-    ],   
+    ],
+    
+    current: [
+      {
+        id: '',
+        nombre: '',
+        ingredientes: "",
+        calorias: '',
+      },
+    ],
   },
 
   getters: {
@@ -30,21 +39,24 @@ export default {
       return state.allBurgers;  
     },
     
-    getSaludo(){
-        try {
-            console.log('hola saludos')
-            
-        } catch (error) {
-            console.log(error)
-        }
-    },
   },
 
   mutations: {   
     loadBurgers(state, data) {
-      console.log(state.allBurgers, data)
-      state.allBurgers.push(...data)
-    }     
+      if(state.allBurgers.length > data.length ) {
+        return
+      }else {
+        state.allBurgers.push(...data)
+      }
+    },
+    
+    setCurrent(state, payload) {
+      const { id, nombre, ingredientes, calorias } = payload.data
+      state.current[0] = { id, nombre, ingredientes, calorias }
+      
+    },
+
+
   },
 
   actions: {
@@ -56,16 +68,11 @@ export default {
     
       commit('loadBurgers', data);
     },
-      
     
-    getSaludo(){
-        try {
-            console.log('hola saludos')
-            
-        } catch (error) {
-            console.log(error)
-        }
+    setCurrentBurger({ commit }, data) {
+      commit('setCurrent', data);
     },
+    
    },
 
   modules: {
