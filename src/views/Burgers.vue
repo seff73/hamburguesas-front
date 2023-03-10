@@ -5,20 +5,23 @@
     <div class="flex-end">
       <h1 class="title-burger-view">MENU </h1>
       <button type="button" class="btn btn-primary" v-on:click="createBurger"> Agregar </button>
-      <button type="button" class="btn btn-primary" v-on:click="getBurgers"> GETDATA </button>
+      <button type="button" class="btn btn-primary" v-on:click="getBurgers2"> GETDATA </button>
     </div>
     <div class="box-container">
-      <BurgerCard v-for="burger in this.allBurgers" :key="burger.id" 
+      <BurgerCard v-for="burger in this.$store.state.burgers.allBurgers" 
+        :key="burger.id" 
         :id="burger.id"  
-        :name="burger.name" 
-        :ingredients="burger.ingredients"
-        :calories="burger.calories" 
+        :name="burger.nombre.toUpperCase()" 
+        :ingredients="burger.ingredientes?.toString().replaceAll(',', ', ')"
+        :calories="burger.calorias" 
       />
     </div>
   </div>
 </template>
 
 <script>
+
+import { mapActions } from 'vuex';
 import BackgComponent from '../components/BackgComponent.vue';
 import BurgerCard from '../components/BurgerCard.vue';
 
@@ -27,38 +30,35 @@ export default {
     components: { BackgComponent, BurgerCard },
     data() {
       return {
-        allBurgers: [
-          {
-            id: '9999',
-            name: 'CHESSE BURGER',
-            ingredients: 'queso, tomate, lechuga, jamón ',
-            calories: '322'
-
-          },
-          {
-            id: '22229',
-            name: 'MEAL BURGER',
-            ingredients: 'steak, tomate, lechuga, onion ',
-            calories: '433'
-
-          }
-        ],
+        
       }
-    }, 
+    },
+
     methods: {
+      ...mapActions('burgers', ['getBurgers2']),
       createBurger() {
             this.$router.push('/hamburguesas/crear')
       },
-       async getBurgers() {
+      async getBurgers() {
         await this.$http
                 .get('https://hamburguesas-back.elevadev.cl/burger/')
                 .then(res => { this.allBurgers = res.data}, err => console.error(err))
         
                 console.log(this.allBurgers)
-      }
+                console.log()
+      },
+      
+
     },
+
+    
+    
     created() {
-      console.log(' creado!, llamando a api');
+      //console.log(this.getBurgers2())
+      this.getBurgers2
+      //console.log(this.$store.state.burgers.allBurgers);
+   
+    
     },
 }
 </script>

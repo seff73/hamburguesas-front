@@ -37,6 +37,9 @@ export default {
     border: solid #E32;
     border-radius: 27px;
     cursor: pointer;
+    min-width: 255px;
+    max-width: 270px;
+    max-height: 342px;
   }
   .burger-card:hover{
     transform: translateY(.2rem);
