@@ -96,21 +96,29 @@ export default {
         };
     },
     methods: {
-        ...mapActions("burgers", ["getBurgers", "postNewBurger", "toggleShowModal"]),
+        ...mapActions("burgers", ["getBurgers", "postNewBurger", "putBurger", "toggleShowModal"]),
         
         async saveBurguer(e) {
             e.preventDefault();
             await this.v$.$validate();
-            
+            //validación de formulario
             if (this.v$.$errors.length) {
                 console.log(this.v$.$errors);
-                console.log("validación fallida");
-            }else {
-                await this.postNewBurger({ "commit": "commit", data: this.state.newBurger });
-                await this.toggleShowModal({'commit': 'commit', target: 'saveModal'})
-                console.log("agregado con exito!!");
-                this.getBurgers();
+                console.log("validación fallida, datos inválidos");
+            }else if (this.state.newBurger.id) {
+            //Actualizando existente
+              await this.putBurger({ "commit": "commit", data: this.state.newBurger });
+              await this.toggleShowModal({'commit': 'commit', target: 'saveModal'})
+              console.log("actualizado con exito!!");
+              this.getBurgers();
+            } else {
+            //Guardando uno nuevo
+              await this.postNewBurger({ "commit": "commit", data: this.state.newBurger });
+              await this.toggleShowModal({'commit': 'commit', target: 'saveModal'})
+              console.log("agregado con exito!!");
+              this.getBurgers();
             }
+            
         },
         
         cancelar() {

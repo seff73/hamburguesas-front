@@ -103,14 +103,30 @@ export default {
       if(newBurger) {
         commit('updateBurgers', newBurger)
       }
-      
+    },
+
+    async putBurger({ commit }, payload) {
+      const newData = { 
+        nombre: payload.data.nombre, 
+        ingredientes: [payload.data.ingredientes],
+        calorias: payload.data.calorias 
+      }
+      const id = payload.data.id
+
+      let newBurger;
+      await axios
+              .put(`https://hamburguesas-back.elevadev.cl/burger/${id}/`, newData)
+              .then(res => { newBurger = res.data }, err => console.log(err))
+      if(newBurger) {
+        commit('updateBurgers', newBurger)
+      }
     },
 
     toggleShowModal({ commit }, payload) {
       commit('changeShowModal', payload.target)
     },
 
-    
+
     
    },
 
