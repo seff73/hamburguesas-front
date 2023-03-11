@@ -1,30 +1,18 @@
-
 import { createStore } from 'vuex';
 import burgers from './burgers';
 
-
-
-
 const store = createStore({
-  state: {
+	state: {},
 
-  },
+	getters: {},
 
-  getters: {
+	mutations: {},
 
-  },
+	actions: {},
 
-  mutations: {
-
-  },
-
-  actions: {
-
-  },
-
-  modules: {
-    burgers
-  },
-})
+	modules: {
+		burgers,
+	},
+});
 
 export default store;

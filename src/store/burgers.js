@@ -1,146 +1,146 @@
-import axios from "axios";
-
-
+import axios from 'axios';
 
 export default {
-  namespaced: true,
+	namespaced: true,
 
+	state: {
+		allBurgers: [
+			{
+				id: 9999,
+				nombre: 'CHESSE BURGER',
+				ingredientes: ['queso', 'tomate', 'lechuga', 'jamón'],
+				calorias: 322,
+			},
 
-  state: {
-    allBurgers: [
-      {
-        id: 9999,
-        nombre: 'CHESSE BURGER',
-        ingredientes: [ 'queso', 'tomate', 'lechuga', 'jamón' ],
-        calorias: 322
-      },
-      
-      {
-        id: 22229,
-        nombre: 'MEAL BURGER',
-        ingredientes: [ 'steak', 'tomate', 'lechuga', 'onion' ],
-        calorias: 433
-      },
-    ],
-    
-    current: [
-      {
-        id: '',
-        nombre: '',
-        ingredientes: "",
-        calorias: '',
-      },
-    ],
+			{
+				id: 22229,
+				nombre: 'MEAL BURGER',
+				ingredientes: ['steak', 'tomate', 'lechuga', 'onion'],
+				calorias: 433,
+			},
+		],
 
-    modals: {
-      saveModal: false,
-      deleteConfirmModal: false,
-    },
-  },
-  
-  getters: {
-    allBurgers(state) {
-        console.log('getters')
-      return state.allBurgers;  
-    },
+		current: [
+			{
+				id: '',
+				nombre: '',
+				ingredientes: '',
+				calorias: '',
+			},
+		],
 
-    getCurrent(state) {
-      return state.current
-    }
-    
-  },
+		modals: {
+			saveModal: false,
+			deleteConfirmModal: false,
+		},
+	},
 
-  mutations: {   
-    loadBurgers(state, data) {
-      
-        state.allBurgers = (data)
-      
-    },
-    updateBurgers(state, data) {
-      state.current[0].id = data.id
+	getters: {
+		allBurgers(state) {
+			console.log('getters');
+			return state.allBurgers;
+		},
 
-    },
-    
-    setCurrent(state, payload) {
-      const { id, nombre, ingredientes, calorias } = payload.data
-      state.current[0] = { id, nombre, ingredientes, calorias }
-      
-    },
+		getCurrent(state) {
+			return state.current;
+		},
+	},
 
-    changeShowModal(state, target){
-      state.modals[target] = !state.modals[target]
-      return true;
-    }
+	mutations: {
+		loadBurgers(state, data) {
+			state.allBurgers = data;
+		},
+		updateBurgers(state, data) {
+			state.current[0].id = data.id;
+		},
 
+		setCurrent(state, payload) {
+			const { id, nombre, ingredientes, calorias } = payload.data;
+			state.current[0] = { id, nombre, ingredientes, calorias };
+		},
 
-  },
+		changeShowModal(state, target) {
+			state.modals[target] = !state.modals[target];
+			return true;
+		},
+	},
 
-  actions: {
-    async getBurgers({ commit }) {
-      let data;
-      await axios
-              .get('https://hamburguesas-back.elevadev.cl/burger/')
-              .then(res => { data = res.data}, err => console.error(err))
-    
-      commit('loadBurgers', data);
-    },
-    
-    setCurrentBurger({ commit }, data) {
-      commit('setCurrent', data);
-    },
+	actions: {
+		async getBurgers({ commit }) {
+			let data;
+			await axios.get('https://hamburguesas-back.elevadev.cl/burger/').then(
+				(res) => {
+					data = res.data;
+				},
+				(err) => console.error(err)
+			);
 
-    async postNewBurger({ commit }, payload) {
-      const newData = { 
-        nombre: payload.data.nombre, 
-        ingredientes: [payload.data.ingredientes],
-        calorias: payload.data.calorias 
-      }
+			commit('loadBurgers', data);
+		},
 
-      let newBurger;
-      await axios
-              .post('https://hamburguesas-back.elevadev.cl/burger/', newData)
-              .then(res => { newBurger = res.data }, err => console.log(err))
-      if(newBurger) {
-        commit('updateBurgers', newBurger)
-      }
-    },
+		setCurrentBurger({ commit }, data) {
+			commit('setCurrent', data);
+		},
 
-    async putBurger({ commit }, payload) {
-      const newData = { 
-        nombre: payload.data.nombre, 
-        ingredientes: [payload.data.ingredientes],
-        calorias: payload.data.calorias 
-      }
-      const id = payload.data.id
+		async postNewBurger({ commit }, payload) {
+			const newData = {
+				nombre: payload.data.nombre,
+				ingredientes: [payload.data.ingredientes],
+				calorias: payload.data.calorias,
+			};
 
-      let newBurger;
-      await axios
-              .put(`https://hamburguesas-back.elevadev.cl/burger/${id}/`, newData)
-              .then(res => { newBurger = res.data }, err => console.log(err))
-      if(newBurger) {
-        commit('updateBurgers', newBurger)
-      }
-    },
+			let newBurger;
+			await axios
+				.post('https://hamburguesas-back.elevadev.cl/burger/', newData)
+				.then(
+					(res) => {
+						newBurger = res.data;
+					},
+					(err) => console.log(err)
+				);
+			if (newBurger) {
+				commit('updateBurgers', newBurger);
+			}
+		},
 
-    async deleteBurger( Void, payload) {
+		async putBurger({ commit }, payload) {
+			const newData = {
+				nombre: payload.data.nombre,
+				ingredientes: [payload.data.ingredientes],
+				calorias: payload.data.calorias,
+			};
+			const id = payload.data.id;
 
-      const id = payload.id
-      await axios
-              .delete(`https://hamburguesas-back.elevadev.cl/burger/${id}/`)
-              .then(res => { console.log('eliminado con éxito', res.data) }, err => console.log(err))
-    },
+			let newBurger;
+			await axios
+				.put(`https://hamburguesas-back.elevadev.cl/burger/${id}/`, newData)
+				.then(
+					(res) => {
+						newBurger = res.data;
+					},
+					(err) => console.log(err)
+				);
+			if (newBurger) {
+				commit('updateBurgers', newBurger);
+			}
+		},
 
-    toggleShowModal({ commit }, payload) {
- 
-      commit('changeShowModal', payload.target)
-    },
+		async deleteBurger(Void, payload) {
+			const id = payload.id;
+			await axios
+				.delete(`https://hamburguesas-back.elevadev.cl/burger/${id}/`)
+				.then(
+					(res) => {
+						console.log('eliminado con éxito', res.data);
+					},
+					(err) => console.log(err)
+				);
+		},
 
+		toggleShowModal({ commit }, payload) {
+			commit('changeShowModal', payload.target);
+		},
+	},
 
-    
-   },
-
-  modules: {
-
-  },
-
-}
+	modules: {},
+};

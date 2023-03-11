@@ -21,9 +21,9 @@ export default {
     },
 
     ...mapActions('burgers', ['toggleShowModal']),
-    
+
     goSuccess() {
-      this.toggleShowModal({'commit': 'commit', target: 'saveModal'})
+      this.toggleShowModal({ 'commit': 'commit', target: 'saveModal' })
       this.$router.push(`/hamburguesas/${this.$store.state.burgers.current[0].id}`)
     },
   }
@@ -31,10 +31,9 @@ export default {
 </script>
 
 <template>
-
   <Teleport to="body">
     <!-- use ethe modal component, pass in the prop -->
-    <modal :show="this.$store.state.burgers.modals.saveModal"  @close="goSuccess">
+    <modal :show="this.$store.state.burgers.modals.saveModal" @close="goSuccess">
       <template #header>
         <h3>Éxito!</h3>
       </template>

@@ -8,7 +8,7 @@ export default {
 
 
   mothods: {
-    
+
   }
 }
 </script>
@@ -23,23 +23,17 @@ export default {
 
         <div class="modal-body">
           <slot name="body">
-           ¿Estás seguro de que deseas eliminar esta hamburguesa?
-            
+            ¿Estás seguro de que deseas eliminar esta hamburguesa?
+
           </slot>
         </div>
 
         <div class="modal-footer">
           <slot name="footer">
-            <button
-                class="btn btn-primary mx-2"
-                @click="$emit('close')"
-            >
-                Cancelar
+            <button class="btn btn-primary mx-2" @click="$emit('close')">
+              Cancelar
             </button>
-            <button
-              class=" btn btn-danger"
-              @click="$emit('confirm')"
-            >Eliminar</button>
+            <button class=" btn btn-danger" @click="$emit('confirm')">Eliminar</button>
           </slot>
         </div>
       </div>
@@ -72,7 +66,8 @@ export default {
 
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;;
+  color: #42b983;
+  ;
 }
 
 .modal-body {

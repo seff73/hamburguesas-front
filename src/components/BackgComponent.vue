@@ -7,11 +7,11 @@
 <script>
 export default {
   name: 'video-bg',
-  props: [ ],
-  data () {
-      return {
-      
-      }
+  props: [],
+  data() {
+    return {
+
+    }
   }
 }
 </script>
@@ -28,5 +28,4 @@ export default {
   opacity: .85;
   border-radius: 14px;
 }
-
 </style>

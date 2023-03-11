@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
-    <WelcomeComponent :algo="unaVariable"/>
+    <WelcomeComponent :algo="unaVariable" />
   </div>
 </template>
 
