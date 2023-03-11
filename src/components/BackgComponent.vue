@@ -1,6 +1,8 @@
 <template>
   <div class="bg-container">
-    <video class="video-bg" src='@/assets/backgroundVideo.mp4' autoplay muted loop />
+    <video class="video-bg">
+      <source src='@/assets/backgroundVideo.mp4' type="video/mp4" autoplay muted loop />
+    </video> 
   </div>
 </template>
 
