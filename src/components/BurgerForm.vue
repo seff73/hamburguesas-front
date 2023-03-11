@@ -56,7 +56,7 @@ import { maxLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';
 import { mapActions } from 'vuex';
 import Modal from './ModalSuccess.vue';
-//import Modal2 from './ModalDelete2.vue';
+
 
 
 export default {

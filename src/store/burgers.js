@@ -40,7 +40,7 @@ export default {
   
   getters: {
     allBurgers(state) {
-        console.log('getterssss')
+        console.log('getters')
       return state.allBurgers;  
     },
 
@@ -123,7 +123,7 @@ export default {
     },
 
     async deleteBurger( Void, payload) {
-      console.log('este es lo que recibo de payload', payload.id)
+
       const id = payload.id
       await axios
               .delete(`https://hamburguesas-back.elevadev.cl/burger/${id}/`)

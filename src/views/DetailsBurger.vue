@@ -55,7 +55,7 @@ export default {
 
     async editBurger(burger) {
       this.$router.push(`/hamburguesas/editar/${burger.id}`)
-      //this.setCurrentBurger({'commit': 'commit', data: burger})
+  
       
     },
 
