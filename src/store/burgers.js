@@ -34,6 +34,7 @@ export default {
 
     modals: {
       saveModal: false,
+      deleteConfirmModal: false,
     },
   },
   
@@ -51,11 +52,9 @@ export default {
 
   mutations: {   
     loadBurgers(state, data) {
-      if(state.allBurgers.length > data.length ) {
-        return
-      }else {
+      
         state.allBurgers = (data)
-      }
+      
     },
     updateBurgers(state, data) {
       state.current[0].id = data.id
@@ -70,6 +69,7 @@ export default {
 
     changeShowModal(state, target){
       state.modals[target] = !state.modals[target]
+      return true;
     }
 
 
@@ -122,7 +122,16 @@ export default {
       }
     },
 
+    async deleteBurger( Void, payload) {
+      console.log('este es lo que recibo de payload', payload.id)
+      const id = payload.id
+      await axios
+              .delete(`https://hamburguesas-back.elevadev.cl/burger/${id}/`)
+              .then(res => { console.log('eliminado con éxito', res.data) }, err => console.log(err))
+    },
+
     toggleShowModal({ commit }, payload) {
+ 
       commit('changeShowModal', payload.target)
     },
 

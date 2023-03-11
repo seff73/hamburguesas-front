@@ -58,8 +58,12 @@ export default {
     
     
     created() {
-  
-      this.getBurgers
+      try {
+       this.getBurgers();   
+      } catch (error) {
+        console.log(error)
+        alert('algo salió mal, intenta de nuevo')
+      }
   
    
     

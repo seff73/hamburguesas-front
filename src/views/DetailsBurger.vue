@@ -9,13 +9,16 @@
     <div class="buttons-modifier-container flex">
         <button class="btn btn-primary mt-4 px-4 m-1 " v-on:click="$event => editBurger(this.$store.state.burgers.current[0])">Editar</button>
         <button class="btn btn-secondary mt-4 m-1" v-on:click="backHome">Regresar</button>
-        <button class="btn btn-danger mt-4 m-1" v-on:click="deleteBurger">Eliminar</button>
+        <button class="btn btn-danger mt-4 m-1" v-on:click="deleteOne">Eliminar</button>
     </div>
+
+    <ModalDelete />
 </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import ModalDelete from '../components/ModalDelete.vue'
+import { mapActions } from 'vuex';
 import BurgerCard from '../components/BurgerCard.vue';
 
 export default {
@@ -40,7 +43,7 @@ export default {
     };
   },
   
-  components: { BurgerCard },
+  components: { BurgerCard, ModalDelete },
   
   methods: {
     
@@ -48,7 +51,7 @@ export default {
       this.$router.push('/hamburguesas')
     },
 
-    ...mapActions('burgers', ['setCurrentBurger']),
+    ...mapActions('burgers', ['getBurgers', 'setCurrentBurger', 'deleteBurger', 'toggleShowModal']),
 
     async editBurger(burger) {
       this.$router.push(`/hamburguesas/editar/${burger.id}`)
@@ -56,14 +59,13 @@ export default {
       
     },
 
-    deleteBurger() {
-        console.log(this.$store.state)
+    async deleteOne() {
+      this.toggleShowModal({'commit': 'commit', target: 'deleteConfirmModal'})
+      
     },
   },
 
-  computed: {
-      ...mapGetters('burgers', ['getSaludo'])
-  },
+  
 
   created () {
     this.currentEdit = this.$store.state.burgers.current[0]
