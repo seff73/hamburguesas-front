@@ -43,7 +43,6 @@ export default {
   components: { BurgerCard },
   
   methods: {
-    ...mapActions('burgers', ['getBurgers']),
     
     backHome() {
       this.$router.push('/hamburguesas')

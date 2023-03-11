@@ -9,17 +9,17 @@ export default {
   state: {
     allBurgers: [
       {
-          id: 9999,
-          nombre: 'CHESSE BURGER',
-          ingredientes: [ 'queso', 'tomate', 'lechuga', 'jamón' ],
-          calorias: 322
+        id: 9999,
+        nombre: 'CHESSE BURGER',
+        ingredientes: [ 'queso', 'tomate', 'lechuga', 'jamón' ],
+        calorias: 322
       },
       
       {
-          id: 22229,
-          nombre: 'MEAL BURGER',
-          ingredientes: [ 'steak', 'tomate', 'lechuga', 'onion' ],
-          calorias: 433
+        id: 22229,
+        nombre: 'MEAL BURGER',
+        ingredientes: [ 'steak', 'tomate', 'lechuga', 'onion' ],
+        calorias: 433
       },
     ],
     
@@ -38,6 +38,10 @@ export default {
         console.log('getterssss')
       return state.allBurgers;  
     },
+
+    getCurrent(state) {
+      return state.current
+    }
     
   },
 
@@ -46,8 +50,12 @@ export default {
       if(state.allBurgers.length > data.length ) {
         return
       }else {
-        state.allBurgers.push(...data)
+        state.allBurgers = (data)
       }
+    },
+    updateBurgers(state, data) {
+      state.current[0].id = data.id
+
     },
     
     setCurrent(state, payload) {
@@ -60,7 +68,7 @@ export default {
   },
 
   actions: {
-    async getBurgers2({ commit }) {
+    async getBurgers({ commit }) {
       let data;
       await axios
               .get('https://hamburguesas-back.elevadev.cl/burger/')
@@ -72,6 +80,23 @@ export default {
     setCurrentBurger({ commit }, data) {
       commit('setCurrent', data);
     },
+
+    async postNewBurger({ commit }, payload) {
+      const newData = { 
+        nombre: payload.data.nombre, 
+        ingredientes: [payload.data.ingredientes],
+        calorias: payload.data.calorias 
+      }
+
+      let newBurger;
+      await axios
+              .post('https://hamburguesas-back.elevadev.cl/burger/', newData)
+              .then(res => { newBurger = res.data }, err => console.log(err))
+      if(newBurger) {
+        commit('updateBurgers', newBurger)
+      }
+      
+    }
     
    },
 

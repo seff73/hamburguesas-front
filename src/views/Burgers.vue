@@ -5,7 +5,7 @@
     <div class="flex-end">
       <h1 class="title-burger-view">MENU </h1>
       <button type="button" class="btn btn-primary mx-3" v-on:click="createBurger"> Agregar </button>
-      <button type="button" class="btn btn-success" v-on:click="getBurgers2"> GET DATA </button>
+      <button type="button" class="btn btn-success" v-on:click="getBurgers"> GET DATA </button>
     </div>
     <div class="box-container">
       <BurgerCard v-for="burger in this.$store.state.burgers.allBurgers" 
@@ -36,7 +36,7 @@ export default {
     },
 
     methods: {
-      ...mapActions('burgers', ['getBurgers2']),
+      ...mapActions('burgers', ['getBurgers']),
       
       ...mapActions('burgers', ['setCurrentBurger']),
       
@@ -52,24 +52,15 @@ export default {
         this.$router.push('/hamburguesas/crear')
   
       },
-      //async getBurgers() {
-      //  await this.$http
-      //          .get('https://hamburguesas-back.elevadev.cl/burger/')
-      //          .then(res => { this.allBurgers = res.data}, err => console.error(err))
-      //  
-      //          console.log(this.allBurgers)
-      //          console.log()
-      //},
-      
 
     },
 
     
     
     created() {
-      //console.log(this.getBurgers2())
-      this.getBurgers2
-      //console.log(this.$store.state.burgers.allBurgers);
+  
+      this.getBurgers
+  
    
     
     },

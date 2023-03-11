@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <form @submit="hello">
+    <form @submit="saveBurguer">
       <div class="mb-0">
 
         <p>
@@ -50,6 +50,7 @@
 import { useVuelidate } from '@vuelidate/core';
 import { maxLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -94,15 +95,26 @@ export default {
     },
 
     methods: {
-      async hello(e) { 
+      ...mapActions('burgers', ['getBurgers']),
+      ...mapActions('burgers', ['postNewBurger']),
+      
+      async saveBurguer(e) { 
         e.preventDefault();
         await this.v$.$validate();
+        
         if(this.v$.$errors.length) {
           console.log(this.v$.$errors)
-          console.log('validate failed')
-      
+          console.log('validación fallida')      
         }else {
           alert('heyheyhey')
+          await this.postNewBurger({'commit': 'commit', data: this.state.newBurger})
+          
+          alert('agregado exitosamente');
+          console.log('agregado con exito!!')
+          this.getBurgers()
+          this.$router.push(`/hamburguesas/${this.$store.state.burgers.current[0].id}`)
+          
+          
         }
           
       },
