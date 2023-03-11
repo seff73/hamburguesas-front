@@ -31,8 +31,12 @@ export default {
         calorias: '',
       },
     ],
-  },
 
+    modals: {
+      saveModal: false,
+    },
+  },
+  
   getters: {
     allBurgers(state) {
         console.log('getterssss')
@@ -63,6 +67,10 @@ export default {
       state.current[0] = { id, nombre, ingredientes, calorias }
       
     },
+
+    changeShowModal(state, target){
+      state.modals[target] = !state.modals[target]
+    }
 
 
   },
@@ -96,7 +104,13 @@ export default {
         commit('updateBurgers', newBurger)
       }
       
-    }
+    },
+
+    toggleShowModal({ commit }, payload) {
+      commit('changeShowModal', payload.target)
+    },
+
+    
     
    },
 

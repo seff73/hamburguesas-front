@@ -26,7 +26,6 @@ export default {
     ...mapActions('burgers', ['setCurrentBurger']),
 
     async editBurger(burger) {
-      //await this.$store.burgers.commit('setCurrent', { current: burger } )
       this.$router.push(`/hamburguesas/${burger.id}`)
       this.setCurrentBurger({'commit': 'commit', data: burger})
       console.log(burger, await this.$store.state.burgers.current[0].nombre)  

@@ -40,9 +40,13 @@
       
         <button type="submit" class="btn btn-primary mr-3 px-4">Guardar</button>
         <button type="cancel" class="btn btn-secondary m-3 " v-on:click="cancelar">Cancelar</button>
+
       
       </div>
     </form>
+    <Modal  />
+
+  
   </div>
 </template>
 
@@ -51,81 +55,74 @@ import { useVuelidate } from '@vuelidate/core';
 import { maxLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { computed, reactive } from 'vue';
 import { mapActions } from 'vuex';
+import Modal from './ModalSuccess.vue';
+//import Modal2 from './ModalDelete2.vue';
 
 
 export default {
     name: "BurgerForm",
-    props: ['current'],
-    setup () {
-      const state = reactive ({
-         newBurger: {
+    props: ["current"],
+    setup() {
+        const state = reactive({
+            newBurger: {
                 nombre: "",
                 ingredientes: [],
                 calorias: ""
-        }
-      })
-
-      const rules = computed(() => {
+            },
+        });
+        const rules = computed(() => {
+            return {
+                newBurger: {
+                    nombre: {
+                        required,
+                        maxLength: maxLength(254),
+                    },
+                    ingredientes: {
+                        required,
+                        maxLength: maxLength(254),
+                    },
+                    calorias: {
+                        required,
+                        minValue: minValue(0),
+                        maxValue: maxValue(100000)
+                    }
+                }
+            };
+        });
+        const v$ = useVuelidate(rules, state);
         return {
-
-          newBurger: {
-            nombre: {
-              required, 
-              maxLength: maxLength(254),
-            },
-            ingredientes: {
-              required,
-              maxLength: maxLength(254),
-            },
-            calorias: {
-              required,
-              minValue: minValue(0),
-              maxValue: maxValue(100000)
-            }               
-          }
-        }
-      });
-
-      const v$ = useVuelidate(rules, state);
-
-      return {
-        state,
-        v$
-      }
+            state,
+            v$
+        };
     },
-
     methods: {
-      ...mapActions('burgers', ['getBurgers']),
-      ...mapActions('burgers', ['postNewBurger']),
-      
-      async saveBurguer(e) { 
-        e.preventDefault();
-        await this.v$.$validate();
+        ...mapActions("burgers", ["getBurgers", "postNewBurger", "toggleShowModal"]),
         
-        if(this.v$.$errors.length) {
-          console.log(this.v$.$errors)
-          console.log('validación fallida')      
-        }else {
-          alert('heyheyhey')
-          await this.postNewBurger({'commit': 'commit', data: this.state.newBurger})
-          
-          alert('agregado exitosamente');
-          console.log('agregado con exito!!')
-          this.getBurgers()
-          this.$router.push(`/hamburguesas/${this.$store.state.burgers.current[0].id}`)
-          
-          
-        }
-          
-      },
-      cancelar() {
-        this.$router.push('/hamburguesas')
-      },
+        async saveBurguer(e) {
+            e.preventDefault();
+            await this.v$.$validate();
+            
+            if (this.v$.$errors.length) {
+                console.log(this.v$.$errors);
+                console.log("validación fallida");
+            }else {
+                await this.postNewBurger({ "commit": "commit", data: this.state.newBurger });
+                await this.toggleShowModal({'commit': 'commit', target: 'saveModal'})
+                console.log("agregado con exito!!");
+                this.getBurgers();
+            }
+        },
+        
+        cancelar() {
+          this.$router.push("/hamburguesas");
+        },
     },
 
-    created () {
-      this.state.newBurger = this.$store.state.burgers.current[0]
-    }
+    created() {
+      this.state.newBurger = this.$store.state.burgers.current[0];
+    },
+
+    components: { Modal }
 }
 </script>
 
@@ -139,4 +136,5 @@ export default {
   .error-message{
     color: #E32;
   }
+  
 </style>
